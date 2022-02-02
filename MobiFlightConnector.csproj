@@ -750,6 +750,9 @@
       <DependentUpon>LCDDisplayPanel.cs</DependentUpon>
     </Compile>
     <None Include="ApplicationInsights.config" />
+    <None Include="Boards\teensy_41.board.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Boards\arduino_mega.board.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

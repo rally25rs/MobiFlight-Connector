@@ -1,0 +1,329 @@
+{
+  "$schema": "./mfboard.schema.json",
+  "AvrDudeSettings": {
+    "Device": "not_supported",
+    "BaudRate": "0",
+    "Programmer": "wiring",
+    "FirmwareBaseName": "mobiflight_teensy",
+    "Timeout": 15000
+  },
+  "Connection": {
+    "ConnectionDelay": 1250,
+    "ExtraConnectionRetry": false,
+    "ForceResetOnFirmwareUpdate": false,
+    "DelayAfterFirmwareUpdate": 0,
+    "DtrEnable": true,
+    "MessageSize": 64,
+    "EEPROMSize": 1496
+  },
+  "HardwareIds": [
+    "^VID_16C0&PID_0479",
+    "^VID_16C0&PID_047A",
+    "^VID_16C0&PID_047B",
+    "^VID_16C0&PID_047C",
+    "^VID_16C0&PID_047D",
+    "^VID_16C0&PID_047E",
+    "^VID_16C0&PID_047F",
+    "^VID_16C0&PID_0480",
+    "^VID_16C0&PID_0481",
+    "^VID_16C0&PID_0482",
+    "^VID_16C0&PID_0483",
+    "^VID_16C0&PID_0484",
+    "^VID_16C0&PID_0485",
+    "^VID_16C0&PID_0486",
+    "^VID_16C0&PID_0487",
+    "^VID_16C0&PID_0488"
+  ],
+  "Info": {
+    "CanInstallFirmware": false,
+    "DelayAfterFirmwareUpdate": 0,
+    "LatestFirmwareVersion": "2.0.1",
+    "FriendlyName": "Teensy Serial",
+    "MobiFlightType": "MobiFlight Teensy"
+  },
+  "ModuleLimits": {
+    "MaxAnalogInputs": 16,
+    "MaxInputShifters": 4,
+    "MaxButtons": 68,
+    "MaxEncoders": 20,
+    "MaxLcdI2C": 2,
+    "MaxLedSegments": 4,
+    "MaxOutputs": 40,
+    "MaxServos": 0,
+    "MaxShifters": 4,
+    "MaxSteppers": 10
+  },
+  "Pins": [
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 0
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 1
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 2
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 3
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 4
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 5
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 6
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 7
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 8
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 9
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 10
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 11
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 12
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 13,
+      "Name": "LED"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 14,
+      "Name":  "A0"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 15,
+      "Name": "A1"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 16,
+      "Name": "A2"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 17,
+      "Name": "A3"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 18,
+      "Name": "A4"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 19,
+      "Name": "A5"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false, // true?
+      "isPWM": false,
+      "Pin": 20,
+      "Name": "A6"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false, // true?
+      "isPWM": false,
+      "Pin": 21,
+      "Name": "A7"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 22,
+      "Name": "A8"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 23,
+      "Name": "A9"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 24,
+      "Name": "A10"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 25,
+      "Name": "A11"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 26,
+      "Name": "A12"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 27,
+      "Name": "A13"
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 28
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 29
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 30
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 31
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 32
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 33
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 34
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 35
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 36
+    },
+    {
+      "isAnalog": false,
+      "isI2C": false,
+      "isPWM": true,
+      "Pin": 37
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 38,
+      "Name": "A14"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 39,
+      "Name": "A15"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 40,
+      "Name": "A16"
+    },
+    {
+      "isAnalog": true,
+      "isI2C": false,
+      "isPWM": false,
+      "Pin": 41,
+      "Name": "A17"
+    }
+  ]
+}
