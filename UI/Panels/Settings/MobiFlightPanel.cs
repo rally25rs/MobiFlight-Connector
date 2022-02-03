@@ -62,6 +62,7 @@ namespace MobiFlight.UI.Panels.Settings
             mfTreeViewImageList.Images.Add(DeviceType.Output.ToString(), MobiFlight.Properties.Resources.output);
             mfTreeViewImageList.Images.Add(DeviceType.LedModule.ToString(), MobiFlight.Properties.Resources.led7);
             mfTreeViewImageList.Images.Add(DeviceType.LcdDisplay.ToString(), MobiFlight.Properties.Resources.led7);
+            mfTreeViewImageList.Images.Add(DeviceType.TftButton.ToString(), MobiFlight.Properties.Resources.button);
             mfTreeViewImageList.Images.Add("Changed", MobiFlight.Properties.Resources.module_changed);
             mfTreeViewImageList.Images.Add("Changed-arcaze", MobiFlight.Properties.Resources.arcaze_changed);
             mfTreeViewImageList.Images.Add("new-arcaze", MobiFlight.Properties.Resources.arcaze_new);
@@ -346,6 +347,11 @@ namespace MobiFlight.UI.Panels.Settings
                             (panel as MFShiftRegisterPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
                             // output
+
+                        case DeviceType.TftButton:
+                            panel = new MFTftButtonPanel(dev as MobiFlight.Config.TftButton);
+                            (panel as MFTftButtonPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                            break;
                     }
                 }
 
@@ -486,6 +492,11 @@ namespace MobiFlight.UI.Panels.Settings
                         (cfgItem as MobiFlight.Config.ShiftRegister).DataPin = getVirtualModuleFromTree().GetFreePins().ElementAt(0).ToString();
                         (cfgItem as MobiFlight.Config.ShiftRegister).ClockPin = getVirtualModuleFromTree().GetFreePins().ElementAt(1).ToString();
                         (cfgItem as MobiFlight.Config.ShiftRegister).LatchPin = getVirtualModuleFromTree().GetFreePins().ElementAt(2).ToString();                        
+                        break;
+
+                    case "tftTouchButtonToolStripMenuItem":
+                    case "addTftTouchButtonToolStripMenuItem":
+                        cfgItem = new MobiFlight.Config.TftButton();
                         break;
 
                     default:

@@ -319,6 +319,13 @@ namespace MobiFlight.UI.Dialogs
                     if (groupBoxInputSettings.Controls[0] != null)
                         (groupBoxInputSettings.Controls[0] as AnalogPanel).ToConfig(config.analog);
                     break;
+
+                case DeviceType.TftButton:
+                    config.Type = InputConfigItem.TYPE_TFT_BUTTON;
+                    if (config.tftButton == null) config.tftButton = new InputConfig.TftButtonInputConfig();
+                    if (groupBoxInputSettings.Controls[0] != null)
+                        (groupBoxInputSettings.Controls[0] as TftButtonPanel).ToConfig(config.tftButton);
+                    break;
             }
 
             return true;
@@ -377,6 +384,7 @@ namespace MobiFlight.UI.Dialogs
                             case DeviceType.AnalogInput:
                             case DeviceType.Encoder:
                             case DeviceType.InputShiftRegister:
+                            case DeviceType.TftButton:
                                 inputTypeComboBox.Items.Add(new ListItem<Config.BaseDevice>() { Label = device.Name, Value = device });
                                 break;
                         }
@@ -494,6 +502,12 @@ namespace MobiFlight.UI.Dialogs
                         panel = new Panels.Input.AnalogPanel();
                         (panel as Panels.Input.AnalogPanel).SetVariableReferences(_execManager.GetAvailableVariables());
                         (panel as Panels.Input.AnalogPanel).syncFromConfig(config.analog);
+                        break;
+
+                    case DeviceType.TftButton:
+                        panel = new Panels.Input.TftButtonPanel();
+                        (panel as Panels.Input.TftButtonPanel).SetVariableReferences(_execManager.GetAvailableVariables());
+                        (panel as Panels.Input.TftButtonPanel).syncFromConfig(config.tftButton);
                         break;
                 }
 

@@ -202,11 +202,13 @@
     <Compile Include="Base\WriteCacheInterface.cs" />
     <Compile Include="MobiFlight\Board.cs" />
     <Compile Include="MobiFlight\BoardDefinitions.cs" />
+    <Compile Include="MobiFlight\Config\TftButton.cs" />
     <Compile Include="MobiFlight\Config\InputShiftRegister.cs" />
     <Compile Include="MobiFlight\Config\ShiftRegister.cs" />
     <Compile Include="MobiFlight\Config\IConfigRefConfigItem.cs" />
     <Compile Include="MobiFlight\Config\AnalogInput.cs" />
     <Compile Include="MobiFlight\InputConfig\AnalogInputConfig.cs" />
+    <Compile Include="MobiFlight\InputConfig\TftButtonInputConfig.cs" />
     <Compile Include="MobiFlight\InputConfig\InputShiftRegisterConfig.cs" />
     <Compile Include="MobiFlight\InputConfig\MSFS2020CustomInputAction.cs" />
     <Compile Include="MobiFlight\InputConfig\VariableInputAction.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="MobiFlight\MaximumDeviceNumberReachedMobiFlightException.cs" />
     <Compile Include="MobiFlight\InputConfig\MSFS2020EventIdInputAction.cs" />
     <Compile Include="MobiFlight\MobiFlightAnalogInput.cs" />
+    <Compile Include="MobiFlight\MobiFlightTftButton.cs" />
     <Compile Include="MobiFlight\MobiFlightPin.cs" />
     <Compile Include="MobiFlight\MobiFlightInputShiftRegister.cs" />
     <Compile Include="MobiFlight\MobiFlightShiftRegister.cs" />
@@ -363,6 +366,12 @@
     <Compile Include="UI\Panels\Config\TransformOptionsGroup.Designer.cs">
       <DependentUpon>TransformOptionsGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Panels\Device\MFTftButtonPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Panels\Device\MFTftButtonPanel.Designer.cs">
+      <DependentUpon>MFTftButtonPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Panels\Device\MFInputShiftRegisterPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -374,6 +383,12 @@
     </Compile>
     <Compile Include="UI\Panels\InputConfigPanel.Designer.cs">
       <DependentUpon>InputConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Panels\Input\TftButtonPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Panels\Input\TftButtonPanel.Designer.cs">
+      <DependentUpon>TftButtonPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Panels\Input\InputShiftRegisterPanel.cs">
       <SubType>UserControl</SubType>
@@ -945,6 +960,12 @@
     <EmbeddedResource Include="UI\Panels\Device\MFAnalogPanel.resx">
       <DependentUpon>MFAnalogPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Device\MFTftButtonPanel.de.resx">
+      <DependentUpon>MFTftButtonPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Device\MFTftButtonPanel.resx">
+      <DependentUpon>MFTftButtonPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Device\MFInputShiftRegisterPanel.de.resx">
       <DependentUpon>MFInputShiftRegisterPanel.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -961,6 +982,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\InputConfigPanel.resx">
       <DependentUpon>InputConfigPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Input\TftButtonPanel.resx">
+      <DependentUpon>TftButtonPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Input\InputShiftRegisterPanel.resx">
       <DependentUpon>InputShiftRegisterPanel.cs</DependentUpon>

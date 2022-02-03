@@ -1486,6 +1486,10 @@ namespace MobiFlight
             {
                 eventAction = MobiFlightAnalogInput.InputEventIdToString(0) + "=>" +e.Value;
             }
+            else if (e.Type == DeviceType.TftButton)
+            {
+                eventAction = MobiFlightTftButton.InputEventIdToString(e.Value);
+            }
 
             lock (inputCache)
             {

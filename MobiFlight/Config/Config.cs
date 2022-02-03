@@ -21,6 +21,7 @@ namespace MobiFlight.Config
         [XmlElement(typeof(LcdDisplay))]
         [XmlElement(typeof(AnalogInput))]
         [XmlElement(typeof(ShiftRegister))]
+        [XmlElement(typeof(TftButton))]
         public List<BaseDevice> Items = new List<BaseDevice>();
 
         public Config() { }
@@ -139,7 +140,10 @@ namespace MobiFlight.Config
                             currentItem = new MobiFlight.Config.ShiftRegister();
                             currentItem.FromInternal(item + BaseDevice.End);
                             break;
-
+                        case DeviceType.TftButton:
+                            currentItem = new MobiFlight.Config.TftButton();
+                            currentItem.FromInternal(item + BaseDevice.End);
+                            break;
                     }
 
                     if (currentItem != null)

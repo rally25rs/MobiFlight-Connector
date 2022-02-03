@@ -23,6 +23,7 @@ namespace MobiFlight
         public const String TYPE_ENCODER = "Encoder";
         public const String TYPE_INPUT_SHIFT_REGISTER = "InputShiftRegister";
         public const String TYPE_ANALOG = "Analog";
+        public const String TYPE_TFT_BUTTON = "TFT Button";
 
         public string ModuleSerial { get; set; }
         public string Name { get; set; }
@@ -30,8 +31,8 @@ namespace MobiFlight
         public ButtonInputConfig button { get; set; }
         public EncoderInputConfig encoder { get; set; }
         public InputShiftRegisterConfig inputShiftRegister { get; set; }
-
         public AnalogInputConfig analog { get; set; }
+        public TftButtonInputConfig tftButton { get; set; }
 
         public PreconditionList Preconditions { get; set; }
         public ConfigRefList ConfigRefs { get; set; }
@@ -65,6 +66,11 @@ namespace MobiFlight
             if (inputShiftRegister != null)
             {
                 result.AddRange(inputShiftRegister.GetInputActionsByType(type));
+            }
+
+            if (tftButton != null)
+            {
+                result.AddRange(tftButton.GetInputActionsByType(type));
             }
             return result;
         }
@@ -112,6 +118,14 @@ namespace MobiFlight
             {
                 analog = new AnalogInputConfig();
                 analog.ReadXml(reader);
+                if (reader.NodeType != XmlNodeType.EndElement) reader.Read(); // this should be the corresponding "end" node
+                reader.Read(); // advance to the next node
+            }
+
+            if (reader.LocalName == "tftButton")
+            {
+                tftButton = new TftButtonInputConfig();
+                tftButton.ReadXml(reader);
                 if (reader.NodeType != XmlNodeType.EndElement) reader.Read(); // this should be the corresponding "end" node
                 reader.Read(); // advance to the next node
             }
@@ -203,6 +217,13 @@ namespace MobiFlight
                 writer.WriteEndElement();
             }
 
+            if (tftButton != null)
+            {
+                writer.WriteStartElement("tftButton");
+                tftButton.WriteXml(writer);
+                writer.WriteEndElement();
+            }
+
             writer.WriteStartElement("preconditions");
             foreach (Precondition p in Preconditions)
             {
@@ -237,6 +258,9 @@ namespace MobiFlight
             if (analog != null)
                 clone.analog = (AnalogInputConfig)this.analog.Clone();
 
+            if (tftButton != null)
+                clone.tftButton = (TftButtonInputConfig)this.tftButton.Clone();
+
             foreach (Precondition p in Preconditions)
             {
                 clone.Preconditions.Add(p.Clone() as Precondition);
@@ -267,7 +291,6 @@ namespace MobiFlight
                     if (encoder != null)
                         encoder.execute(fsuipcCache, simConnectCache, moduleCache, e, configRefs);
                     break;
-
                 case TYPE_INPUT_SHIFT_REGISTER:
                     if (inputShiftRegister != null)
                         inputShiftRegister.execute(fsuipcCache, simConnectCache, moduleCache, e, configRefs);
@@ -275,6 +298,10 @@ namespace MobiFlight
                 case TYPE_ANALOG:
                     if (analog != null)
                         analog.execute(fsuipcCache, simConnectCache, moduleCache, e, configRefs);
+                    break;
+                case TYPE_TFT_BUTTON:
+                    if (tftButton != null)
+                        tftButton.execute(fsuipcCache, simConnectCache, moduleCache, e, configRefs);
                     break;
             }
         }
@@ -289,8 +316,8 @@ namespace MobiFlight
                 // in some older version we didn't save the node correctly
                 if (button != null)
                     result = button?.GetStatistics();
-
-            } else if (Type == TYPE_ENCODER)
+            }
+            else if (Type == TYPE_ENCODER)
             {
                 // explicit test is needed 
                 // in some older version we didn't save the node correctly
@@ -303,6 +330,13 @@ namespace MobiFlight
                 // in some older version we didn't save the node correctly
                 if (analog != null)
                     result = analog.GetStatistics();
+            }
+            else if (Type == TYPE_TFT_BUTTON)
+            {
+                // explicit test is needed 
+                // in some older version we didn't save the node correctly
+                if (tftButton != null)
+                    result = tftButton?.GetStatistics();
             }
 
             return result;
@@ -320,6 +354,7 @@ namespace MobiFlight
                 areSame = areSame && ((encoder == null && (obj as InputConfigItem).encoder == null) || (encoder != null && encoder.Equals((obj as InputConfigItem).encoder)));
                 areSame = areSame && ((analog == null && (obj as InputConfigItem).analog == null) || (analog != null && analog.Equals((obj as InputConfigItem).analog)));
                 areSame = areSame && ((inputShiftRegister == null && (obj as InputConfigItem).inputShiftRegister == null) || (inputShiftRegister != null && inputShiftRegister.Equals((obj as InputConfigItem).inputShiftRegister)));
+                areSame = areSame && ((tftButton == null && (obj as InputConfigItem).tftButton == null) || (tftButton != null && tftButton.Equals((obj as InputConfigItem).tftButton)));
 
                 areSame = areSame && 
                             Preconditions.Equals((obj as InputConfigItem).Preconditions) &&

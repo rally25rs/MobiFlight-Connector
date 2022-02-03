@@ -48,7 +48,8 @@ namespace MobiFlight
         Stepper,             // 9
         ShiftRegister,       // 10
         AnalogInput,         // 11
-        InputShiftRegister   // 12
+        InputShiftRegister,  // 12
+        TftButton            // 13
     }
 
     public class MobiFlightModule : IModule, IOutputModule
@@ -84,7 +85,8 @@ namespace MobiFlight
             SetModuleBrightness,    // 26
             SetShiftRegisterPins,   // 27
             AnalogChange,           // 28
-            InputShiftRegisterChange // 29
+            InputShiftRegisterChange, // 29
+            TftButtonChange         // 30
         };
 
         public delegate void InputDeviceEventHandler(object sender, InputEventArgs e);
@@ -207,6 +209,7 @@ namespace MobiFlight
         Dictionary<String, MobiFlightAnalogInput> analogInputs = new Dictionary<string, MobiFlightAnalogInput>();
         Dictionary<String, MobiFlightShiftRegister> shiftRegisters = new Dictionary<string, MobiFlightShiftRegister>();
         Dictionary<String, MobiFlightInputShiftRegister> inputShiftRegisters = new Dictionary<string, MobiFlightInputShiftRegister>();
+        Dictionary<String, MobiFlightTftButton> tftButtons = new Dictionary<string, MobiFlightTftButton>();
 
         Dictionary<String, int> buttonValues = new Dictionary<String, int>();
 
@@ -351,7 +354,12 @@ namespace MobiFlight
                         int.TryParse((device as Config.ShiftRegister).NumModules, out submodules);
                         shiftRegisters.Add(device.Name, new MobiFlightShiftRegister() { CmdMessenger = _cmdMessenger, Name = device.Name, NumberOfShifters = submodules, ModuleNumber = shiftRegisters.Count});
                         break;
-                }                
+
+                    case DeviceType.TftButton:
+                        device.Name = GenerateUniqueDeviceName(tftButtons.Keys.ToArray(), device.Name);
+                        tftButtons.Add(device.Name, new MobiFlightTftButton() { Name = device.Name });
+                        break;
+                }
             }
         }
 
@@ -452,7 +460,7 @@ namespace MobiFlight
             _cmdMessenger.Attach((int)Command.InputShiftRegisterChange, OnInputShiftRegisterChange);
             _cmdMessenger.Attach((int)Command.ButtonChange, OnButtonChange);
             _cmdMessenger.Attach((int)Command.AnalogChange, OnAnalogChange);
-
+            _cmdMessenger.Attach((int)Command.TftButtonChange, OnTftButtonChange);
         }
 
         /// Executes when an unknown command has been received.
@@ -523,14 +531,24 @@ namespace MobiFlight
                 OnInputDeviceAction(this, new InputEventArgs() { Serial = this.Serial, DeviceId = name, Type = DeviceType.AnalogInput, Value = int.Parse(value) });
          }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="port">the virtual port on the board or extension</param>
-    /// <param name="pin"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public bool SetPin(string port, string pin, int value)
+        // Callback function that prints the Arduino status to the console
+        void OnTftButtonChange(ReceivedCommand arguments)
+        {
+            String button = arguments.ReadStringArg();
+            String state = arguments.ReadStringArg();
+            //addLog("TFT Button: " + button + ":" + state);
+            if (OnInputDeviceAction != null)
+                OnInputDeviceAction(this, new InputEventArgs() { Serial = this.Serial, DeviceId = button, Type = DeviceType.TftButton, Value = int.Parse(state) });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="port">the virtual port on the board or extension</param>
+        /// <param name="pin"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetPin(string port, string pin, int value)
         {
             // if value has not changed since the last time, then we continue to next item to prevent 
             // unnecessary communication with Arcaze USB
@@ -848,6 +866,7 @@ namespace MobiFlight
             result[MobiFlightEncoder.TYPE] = encoders.Count;
             result[MobiFlightAnalogInput.TYPE] = analogInputs.Count;
             result[MobiFlightInputShiftRegister.TYPE] = inputShiftRegisters.Count;
+            result[MobiFlightTftButton.TYPE] = tftButtons.Count;
 
             return result;
         }
@@ -919,6 +938,7 @@ namespace MobiFlight
             bool _hasEncoder = false;
             bool _hasAnalog = false;
             bool _hasInputShiftRegisters = false;
+            bool _hasTftButtons = false;
 
             List<DeviceType> result = new List<DeviceType>();
             
@@ -938,13 +958,16 @@ namespace MobiFlight
                     case DeviceType.AnalogInput:
                         _hasAnalog = true;
                         break;
-
+                    case DeviceType.TftButton:
+                        _hasTftButtons = true;
+                        break;
                 }
             }            
             if (_hasButtons) result.Add(DeviceType.Button);
             if (_hasEncoder) result.Add(DeviceType.Encoder);
             if (_hasAnalog) result.Add(DeviceType.AnalogInput);
             if (_hasInputShiftRegisters) result.Add(DeviceType.InputShiftRegister);
+            if (_hasTftButtons) result.Add(DeviceType.TftButton);
 
             return result;
         }
@@ -961,6 +984,7 @@ namespace MobiFlight
                     case DeviceType.Encoder:
                     case DeviceType.InputShiftRegister:
                     case DeviceType.AnalogInput:
+                    case DeviceType.TftButton:
                         result.Add(dev);
                         break;
                 }
