@@ -40,6 +40,7 @@ namespace MobiFlight.UI.Dialogs
         Panels.ServoPanel                   servoPanel                  = new Panels.ServoPanel();
         Panels.StepperPanel                 stepperPanel                = new Panels.StepperPanel();
         Panels.DisplayShiftRegisterPanel    displayShiftRegisterPanel   = new Panels.DisplayShiftRegisterPanel();
+        Panels.DisplayVirtualOutputPanel    displayVirtualOutputPanel   = new Panels.DisplayVirtualOutputPanel();
 
         public ConfigWizard( ExecutionManager mainForm, 
                              OutputConfigItem cfg,
@@ -156,7 +157,8 @@ namespace MobiFlight.UI.Dialogs
             stepperPanel.OnManualCalibrationTriggered += new EventHandler<Panels.ManualCalibrationTriggeredEventArgs>(stepperPanel_OnManualCalibrationTriggered);
             stepperPanel.OnSetZeroTriggered += new EventHandler(stepperPanel_OnSetZeroTriggered);
             stepperPanel.OnStepperSelected +=  StepperPanel_OnStepperSelected;
-
+            groupBoxDisplaySettings.Controls.Add(displayVirtualOutputPanel);
+            displayVirtualOutputPanel.Dock = DockStyle.Top;
 
             groupBoxDisplaySettings.Controls.Add(displayLcdDisplayPanel);
             displayLcdDisplayPanel.AutoSize = false;
@@ -173,6 +175,7 @@ namespace MobiFlight.UI.Dialogs
             displayPanels.Add(stepperPanel);
             displayPanels.Add(displayLcdDisplayPanel);
             displayPanels.Add(displayShiftRegisterPanel);
+            displayPanels.Add(displayVirtualOutputPanel);
 
             foreach (UserControl p in displayPanels)
             {
@@ -360,7 +363,9 @@ namespace MobiFlight.UI.Dialogs
             displayShiftRegisterPanel.SyncFromConfig(config);
 
             preconditionPanel.syncFromConfig(config);
-            
+
+            displayVirtualOutputPanel.syncFromConfig(config);
+
             return true;
         }
 
@@ -439,6 +444,8 @@ namespace MobiFlight.UI.Dialogs
 
             displayShiftRegisterPanel.SyncToConfig(config);
 
+            displayVirtualOutputPanel.syncToConfig(config);
+
             return true;
         }
 
@@ -512,6 +519,7 @@ namespace MobiFlight.UI.Dialogs
                     displayTypeComboBox.Items.Add("Pin");
                     displayTypeComboBox.Items.Add(ArcazeLedDigit.TYPE);
                     displayTypeComboBox.Items.Add(MobiFlightShiftRegister.TYPE);
+                    displayTypeComboBox.Items.Add(MobiFlightVirtualOutput.TYPE);
                     //displayTypeComboBox.Items.Add(ArcazeBcd4056.TYPE);
                 }
                 else
@@ -548,6 +556,10 @@ namespace MobiFlight.UI.Dialogs
 
                             case DeviceType.ShiftRegister:
                                 displayTypeComboBox.Items.Add(MobiFlightShiftRegister.TYPE);
+                                break;
+
+                            case DeviceType.VirtualOutput:
+                                displayTypeComboBox.Items.Add(MobiFlightVirtualOutput.TYPE);
                                 break;
                         }
                     }
@@ -683,13 +695,15 @@ namespace MobiFlight.UI.Dialogs
                     displayPinPanel.displayPinBrightnessPanel.Visible = true;
                     displayPinPanel.displayPinBrightnessPanel.Enabled = (displayPinPanel.displayPinBrightnessPanel.Visible && (cb.SelectedIndex > 1));
 
+                    displayVirtualOutputPanel.SetModule(module);
+
                     List<ListItem> outputs = new List<ListItem>();
                     List<ListItem> ledSegments = new List<ListItem>();
                     List<ListItem> servos = new List<ListItem>();
                     List<ListItem> stepper = new List<ListItem>();
                     List<ListItem> lcdDisplays = new List<ListItem>();
                     List<ListItem> shiftRegisters = new List<ListItem>();
-
+                    List<ListItem> virtualOutputs = new List<ListItem>();
 
                     foreach (IConnectedDevice device in module.GetConnectedDevices())
                     {
@@ -719,8 +733,11 @@ namespace MobiFlight.UI.Dialogs
                                 break;
                             
                             case DeviceType.ShiftRegister:
-                                shiftRegisters.Add(new ListItem() { Value = device.Name, Label = device.Name });                                
-                                
+                                shiftRegisters.Add(new ListItem() { Value = device.Name, Label = device.Name });                                               
+                                break;
+
+                            case DeviceType.VirtualOutput:
+                                virtualOutputs.Add(new ListItem() { Value = device.Name, Label = device.Name });
                                 break;
                         }                        
                     }
@@ -741,6 +758,10 @@ namespace MobiFlight.UI.Dialogs
                     displayShiftRegisterPanel.SetAddresses(shiftRegisters);
 
                     displayLcdDisplayPanel.SetAddresses(lcdDisplays);
+
+                    displayVirtualOutputPanel.WideStyle = true;
+                    displayVirtualOutputPanel.SetPorts(new List<ListItem>());
+                    displayVirtualOutputPanel.SetPins(virtualOutputs);
                 }
                 if ((sender as ComboBox).Text == "Pin")
                 {
@@ -782,6 +803,12 @@ namespace MobiFlight.UI.Dialogs
                 {
                     displayShiftRegisterPanel.Enabled = panelEnabled;
                     displayShiftRegisterPanel.Height = displayPanelHeight;
+                }
+
+                if ((sender as ComboBox).Text == MobiFlightVirtualOutput.TYPE)
+                {
+                    displayVirtualOutputPanel.Enabled = panelEnabled;
+                    displayVirtualOutputPanel.Height = displayPanelHeight;
                 }
             }
             catch (Exception exc)

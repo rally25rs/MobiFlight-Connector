@@ -407,7 +407,8 @@
             this.displayTypeComboBox.Items.AddRange(new object[] {
             resources.GetString("displayTypeComboBox.Items"),
             resources.GetString("displayTypeComboBox.Items1"),
-            resources.GetString("displayTypeComboBox.Items2")});
+            resources.GetString("displayTypeComboBox.Items2"),
+            resources.GetString("displayTypeComboBox.Items3")});
             resources.ApplyResources(this.displayTypeComboBox, "displayTypeComboBox");
             this.displayTypeComboBox.Name = "displayTypeComboBox";
             this.displayTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.displayTypeComboBox_SelectedIndexChanged);

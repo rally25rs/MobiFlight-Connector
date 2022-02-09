@@ -84,6 +84,8 @@
             this.FwAutoInstallCheckBox = new System.Windows.Forms.CheckBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.CompatibleBoardScanToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.addVirtualOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.virtualOutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mfConfiguredModulesGroupBox.SuspendLayout();
             this.mfModuleSettingsContextMenuStrip.SuspendLayout();
             this.mobiflightSettingsToolStrip.SuspendLayout();
@@ -139,6 +141,7 @@
             this.stepperToolStripMenuItem,
             this.LcdDisplayToolStripMenuItem,
             this.ShiftRegisterToolStripMenuItem,
+            this.virtualOutputToolStripMenuItem,
             this.toolStripMenuItem4,
             this.buttonToolStripMenuItem,
             this.encoderToolStripMenuItem,
@@ -344,6 +347,7 @@
             this.addStepperToolStripMenuItem,
             this.addLcdDisplayToolStripMenuItem,
             this.addShiftRegisterToolStripMenuItem,
+            this.addVirtualOutputToolStripMenuItem,
             this.toolStripSeparator3,
             this.addEncoderToolStripMenuItem,
             this.addButtonToolStripMenuItem,
@@ -460,6 +464,18 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // addVirtualOutputToolStripMenuItem
+            // 
+            this.addVirtualOutputToolStripMenuItem.Name = "addVirtualOutputToolStripMenuItem";
+            resources.ApplyResources(this.addVirtualOutputToolStripMenuItem, "addVirtualOutputToolStripMenuItem");
+            this.addVirtualOutputToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
+            // 
+            // virtualOutputToolStripMenuItem
+            // 
+            this.virtualOutputToolStripMenuItem.Name = "virtualOutputToolStripMenuItem";
+            resources.ApplyResources(this.virtualOutputToolStripMenuItem, "virtualOutputToolStripMenuItem");
+            this.virtualOutputToolStripMenuItem.Click += new System.EventHandler(this.addDeviceTypeToolStripMenuItem_Click);
+            // 
             // MobiFlightPanel
             // 
             resources.ApplyResources(this, "$this");
@@ -537,5 +553,7 @@
         private System.Windows.Forms.ToolStripMenuItem inputShiftRegisterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tftTouchButtonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addTftTouchButtonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem virtualOutputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addVirtualOutputToolStripMenuItem;
     }
 }

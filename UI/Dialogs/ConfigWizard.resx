@@ -1192,6 +1192,9 @@
   <data name="displayTypeComboBox.Items2" xml:space="preserve">
     <value>BCD4056</value>
   </data>
+  <data name="displayTypeComboBox.Items3" xml:space="preserve">
+    <value>VirtualOutput</value>
+  </data>
   <data name="displayTypeComboBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>98, 45</value>
   </data>

@@ -157,6 +157,12 @@
   <data name="ShiftRegisterToolStripMenuItem.Text" xml:space="preserve">
     <value>Shift Register</value>
   </data>
+  <data name="virtualOutputToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="virtualOutputToolStripMenuItem.Text" xml:space="preserve">
+    <value>Virtual Output</value>
+  </data>
   <data name="toolStripMenuItem4.Size" type="System.Drawing.Size, System.Drawing">
     <value>177, 6</value>
   </data>
@@ -431,6 +437,12 @@
   </data>
   <data name="addShiftRegisterToolStripMenuItem.Text" xml:space="preserve">
     <value>Shift Register</value>
+  </data>
+  <data name="addVirtualOutputToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="addVirtualOutputToolStripMenuItem.Text" xml:space="preserve">
+    <value>Virtual Output</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
     <value>177, 6</value>
@@ -932,6 +944,18 @@
   </data>
   <data name="&gt;&gt;CompatibleBoardScanToolTip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;addVirtualOutputToolStripMenuItem.Name" xml:space="preserve">
+    <value>addVirtualOutputToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;addVirtualOutputToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;virtualOutputToolStripMenuItem.Name" xml:space="preserve">
+    <value>virtualOutputToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;virtualOutputToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MobiFlightPanel</value>

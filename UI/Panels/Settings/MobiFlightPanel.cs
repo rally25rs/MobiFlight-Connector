@@ -63,6 +63,7 @@ namespace MobiFlight.UI.Panels.Settings
             mfTreeViewImageList.Images.Add(DeviceType.LedModule.ToString(), MobiFlight.Properties.Resources.led7);
             mfTreeViewImageList.Images.Add(DeviceType.LcdDisplay.ToString(), MobiFlight.Properties.Resources.led7);
             mfTreeViewImageList.Images.Add(DeviceType.TftButton.ToString(), MobiFlight.Properties.Resources.button);
+            mfTreeViewImageList.Images.Add(DeviceType.VirtualOutput.ToString(), MobiFlight.Properties.Resources.output);
             mfTreeViewImageList.Images.Add("Changed", MobiFlight.Properties.Resources.module_changed);
             mfTreeViewImageList.Images.Add("Changed-arcaze", MobiFlight.Properties.Resources.arcaze_changed);
             mfTreeViewImageList.Images.Add("new-arcaze", MobiFlight.Properties.Resources.arcaze_new);
@@ -352,6 +353,11 @@ namespace MobiFlight.UI.Panels.Settings
                             panel = new MFTftButtonPanel(dev as MobiFlight.Config.TftButton);
                             (panel as MFTftButtonPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
                             break;
+
+                        case DeviceType.VirtualOutput:
+                            panel = new MFVirtualOutputPanel(dev as MobiFlight.Config.VirtualOutput, module.GetVirtualPins(), module.Board);
+                            (panel as MFVirtualOutputPanel).Changed += new EventHandler(mfConfigDeviceObject_changed);
+                            break;
                     }
                 }
 
@@ -497,6 +503,12 @@ namespace MobiFlight.UI.Panels.Settings
                     case "tftTouchButtonToolStripMenuItem":
                     case "addTftTouchButtonToolStripMenuItem":
                         cfgItem = new MobiFlight.Config.TftButton();
+                        break;
+
+                    case "virtualOutputToolStripMenuItem":
+                    case "addVirtualOutputToolStripMenuItem":
+                        cfgItem = new MobiFlight.Config.VirtualOutput();
+
                         break;
 
                     default:

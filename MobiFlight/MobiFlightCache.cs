@@ -602,7 +602,62 @@ namespace MobiFlight
                 throw new MobiFlight.ArcazeCommandExecutionException(i18n._tr("ConfigErrorException_WriteShiftRegisterOutput"), e);
             }
         }
-      
+
+        /// <summary>
+        /// sets the virtual pins in the mobiflight modules according to the given value
+        /// </summary>
+        /// <param name="serial">the device's serial</param>
+        /// <param name="name">the port letter and pin number, e.g. A01</param>
+        /// <param name="value">the value to be used</param>
+        public void setVirtualOutput(string serial, string name, string value)
+        {
+            if (serial == null)
+            {
+                throw new ConfigErrorException("ConfigErrorException_SerialNull");
+            };
+
+            try
+            {
+                if (name == null || name == "") return;
+
+                if (!Modules.ContainsKey(serial)) return;
+
+                MobiFlightModule module = GetModuleBySerial(serial);
+
+                if (name != null && name.Contains("|"))
+                {
+                    var pins = name.Split('|');
+                    foreach (string pin in pins)
+                    {
+                        if (!string.IsNullOrEmpty(pin.Trim()))
+                        {
+                            module.SetVirtualOutput("base", pin, Int16.Parse(value));
+                        }
+                    };
+                }
+                else
+                {
+                    module.SetVirtualOutput("base", name, Int16.Parse(value));
+                }
+
+
+            }
+            catch (ConfigErrorException e)
+            {
+                throw e;
+            }
+            catch (FormatException e)
+            {
+                // do nothing
+                // maybe log this some time in the future
+            }
+            catch (Exception e)
+            {
+                throw e;
+                //this.ConnectionLost(this, new EventArgs());
+            }
+        } //setValue()
+
         public void Flush()
         {
             // not implemented, don't throw exception either

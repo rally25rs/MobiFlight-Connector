@@ -202,6 +202,7 @@
     <Compile Include="Base\WriteCacheInterface.cs" />
     <Compile Include="MobiFlight\Board.cs" />
     <Compile Include="MobiFlight\BoardDefinitions.cs" />
+    <Compile Include="MobiFlight\Config\VirtualOutput.cs" />
     <Compile Include="MobiFlight\Config\TftButton.cs" />
     <Compile Include="MobiFlight\Config\InputShiftRegister.cs" />
     <Compile Include="MobiFlight\Config\ShiftRegister.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="MobiFlight\MaximumDeviceNumberReachedMobiFlightException.cs" />
     <Compile Include="MobiFlight\InputConfig\MSFS2020EventIdInputAction.cs" />
     <Compile Include="MobiFlight\MobiFlightAnalogInput.cs" />
+    <Compile Include="MobiFlight\MobiFlightVirtualOutput.cs" />
     <Compile Include="MobiFlight\MobiFlightTftButton.cs" />
     <Compile Include="MobiFlight\MobiFlightPin.cs" />
     <Compile Include="MobiFlight\MobiFlightInputShiftRegister.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="MobiFlight\OutputConfig\Comparison.cs" />
     <Compile Include="MobiFlight\OutputConfig\FsuipcOffset.cs" />
     <Compile Include="MobiFlight\OutputConfig\LedModule.cs" />
+    <Compile Include="MobiFlight\OutputConfig\VirtualOutput.cs" />
     <Compile Include="MobiFlight\OutputConfig\ShiftRegister.cs" />
     <Compile Include="MobiFlight\OutputConfig\Pin.cs" />
     <Compile Include="MobiFlight\OutputConfig\Servo.cs" />
@@ -366,6 +369,12 @@
     <Compile Include="UI\Panels\Config\TransformOptionsGroup.Designer.cs">
       <DependentUpon>TransformOptionsGroup.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Panels\Device\MFVirtualOutputPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Panels\Device\MFVirtualOutputPanel.Designer.cs">
+      <DependentUpon>MFVirtualOutputPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Panels\Device\MFTftButtonPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -407,6 +416,12 @@
     </Compile>
     <Compile Include="UI\Panels\OutputConfigPanel.Designer.cs">
       <DependentUpon>OutputConfigPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Panels\Output\DisplayVirtualOutputPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Panels\Output\DisplayVirtualOutputPanel.Designer.cs">
+      <DependentUpon>DisplayVirtualOutputPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Panels\Output\PinSelectPanel.cs">
       <SubType>UserControl</SubType>
@@ -960,6 +975,13 @@
     <EmbeddedResource Include="UI\Panels\Device\MFAnalogPanel.resx">
       <DependentUpon>MFAnalogPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Device\MFVirtualOutputPanel.de.resx">
+      <DependentUpon>MFVirtualOutputPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Device\MFVirtualOutputPanel.resx">
+      <DependentUpon>MFVirtualOutputPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Device\MFTftButtonPanel.de.resx">
       <DependentUpon>MFTftButtonPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -1002,6 +1024,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\DisplayLedDisplayPanel.de.resx">
       <DependentUpon>DisplayLedDisplayPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Output\DisplayVirtualOutputPanel.de.resx">
+      <DependentUpon>DisplayVirtualOutputPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Panels\Output\DisplayVirtualOutputPanel.resx">
+      <DependentUpon>DisplayVirtualOutputPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Panels\Output\PinSelectPanel.resx">
       <DependentUpon>PinSelectPanel.cs</DependentUpon>

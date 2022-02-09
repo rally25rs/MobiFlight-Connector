@@ -1062,6 +1062,10 @@ namespace MobiFlight
                         }
                         break;
 
+                    case MobiFlightVirtualOutput.TYPE:
+                        mobiFlightCache.setVirtualOutput(serial, cfg.Pin.DisplayPin, value);
+                        break;
+
                     default:
                         string outputValue = value;
 

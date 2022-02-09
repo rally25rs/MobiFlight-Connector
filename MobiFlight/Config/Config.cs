@@ -22,6 +22,7 @@ namespace MobiFlight.Config
         [XmlElement(typeof(AnalogInput))]
         [XmlElement(typeof(ShiftRegister))]
         [XmlElement(typeof(TftButton))]
+        [XmlElement(typeof(VirtualOutput))]
         public List<BaseDevice> Items = new List<BaseDevice>();
 
         public Config() { }
@@ -144,6 +145,11 @@ namespace MobiFlight.Config
                             currentItem = new MobiFlight.Config.TftButton();
                             currentItem.FromInternal(item + BaseDevice.End);
                             break;
+                        case DeviceType.VirtualOutput:
+                            currentItem = new MobiFlight.Config.VirtualOutput();
+                            currentItem.FromInternal(item + BaseDevice.End);
+                            break;
+
                     }
 
                     if (currentItem != null)

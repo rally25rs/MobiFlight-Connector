@@ -49,7 +49,8 @@ namespace MobiFlight
         ShiftRegister,       // 10
         AnalogInput,         // 11
         InputShiftRegister,  // 12
-        TftButton            // 13
+        TftButton,           // 13
+        VirtualOutput        // 14
     }
 
     public class MobiFlightModule : IModule, IOutputModule
@@ -86,7 +87,8 @@ namespace MobiFlight
             SetShiftRegisterPins,   // 27
             AnalogChange,           // 28
             InputShiftRegisterChange, // 29
-            TftButtonChange         // 30
+            TftButtonChange,        // 30
+            VirtualOutputChange     // 31
         };
 
         public delegate void InputDeviceEventHandler(object sender, InputEventArgs e);
@@ -210,6 +212,7 @@ namespace MobiFlight
         Dictionary<String, MobiFlightShiftRegister> shiftRegisters = new Dictionary<string, MobiFlightShiftRegister>();
         Dictionary<String, MobiFlightInputShiftRegister> inputShiftRegisters = new Dictionary<string, MobiFlightInputShiftRegister>();
         Dictionary<String, MobiFlightTftButton> tftButtons = new Dictionary<string, MobiFlightTftButton>();
+        Dictionary<String, MobiFlightVirtualOutput> virtualOutputs = new Dictionary<string, MobiFlightVirtualOutput>();
 
         Dictionary<String, int> buttonValues = new Dictionary<String, int>();
 
@@ -298,6 +301,7 @@ namespace MobiFlight
             inputShiftRegisters.Clear();
             analogInputs.Clear();
             shiftRegisters.Clear();
+            virtualOutputs.Clear();
 
             foreach (Config.BaseDevice device in Config.Items)
             {
@@ -358,6 +362,11 @@ namespace MobiFlight
                     case DeviceType.TftButton:
                         device.Name = GenerateUniqueDeviceName(tftButtons.Keys.ToArray(), device.Name);
                         tftButtons.Add(device.Name, new MobiFlightTftButton() { Name = device.Name });
+                        break;
+
+                    case DeviceType.VirtualOutput:
+                        device.Name = GenerateUniqueDeviceName(virtualOutputs.Keys.ToArray(), device.Name);
+                        virtualOutputs.Add(device.Name, new MobiFlightVirtualOutput() { CmdMessenger = _cmdMessenger, Name = device.Name, Pin = Int16.Parse((device as Config.VirtualOutput).Pin) });
                         break;
                 }
             }
@@ -562,6 +571,31 @@ namespace MobiFlight
             if (!outputs.ContainsKey(pin)) return false;
 
             outputs[pin].Set(value);
+
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="port">the virtual port on the board or extension</param>
+        /// <param name="pin"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public bool SetVirtualOutput(string port, string pin, int value)
+        {
+            // if value has not changed since the last time, then we continue to next item to prevent 
+            // unnecessary communication with Arcaze USB
+            String key = port + pin;
+
+            if (!KeepAliveNeeded() && lastValue.ContainsKey(key) &&
+                lastValue[key] == value.ToString()) return false;
+
+            lastValue[key] = value.ToString();
+
+            if (!virtualOutputs.ContainsKey(pin)) return false;
+
+            virtualOutputs[pin].Set(value);
 
             return true;
         }
@@ -850,6 +884,11 @@ namespace MobiFlight
                 result.Add(shiftRegister);
             }
 
+            foreach (MobiFlightVirtualOutput virtualOutput in virtualOutputs.Values)
+            {
+                result.Add(virtualOutput);
+            }
+
             return result;
         }
 
@@ -867,6 +906,7 @@ namespace MobiFlight
             result[MobiFlightAnalogInput.TYPE] = analogInputs.Count;
             result[MobiFlightInputShiftRegister.TYPE] = inputShiftRegisters.Count;
             result[MobiFlightTftButton.TYPE] = tftButtons.Count;
+            result[MobiFlightVirtualOutput.TYPE] = virtualOutputs.Count;
 
             return result;
         }
@@ -911,6 +951,12 @@ namespace MobiFlight
                     result.Add(shiftRegister);
             }
 
+            foreach (MobiFlightVirtualOutput virtualOutput in virtualOutputs.Values)
+            {
+                if (virtualOutput.Name == name)
+                    result.Add(virtualOutput);
+            }
+
             return result;
         }
 
@@ -928,6 +974,7 @@ namespace MobiFlight
             if (servoModules.Count > 0) result.Add(DeviceType.Servo);
             if (lcdDisplays.Count > 0) result.Add(DeviceType.LcdDisplay);
             if (shiftRegisters.Count > 0) result.Add(DeviceType.ShiftRegister);
+            if (virtualOutputs.Count > 0) result.Add(DeviceType.VirtualOutput);
 
             return result;
         }
@@ -1058,6 +1105,36 @@ namespace MobiFlight
             return GetPins(true);
         }
 
+        public List<MobiFlightPin> GetVirtualPins(bool FreeOnly = false)
+        {
+            List<MobiFlightPin> ResultPins = new List<MobiFlightPin>();
+            ResultPins.AddRange(Board.Pins.Select(x => new MobiFlightPin(x)));
+
+            List<byte> usedPins = new List<byte>();
+
+            foreach (Config.BaseDevice device in Config.Items)
+            {
+                String deviceName = device.Name;
+                switch (device.Type)
+                {
+                    case DeviceType.VirtualOutput:
+                        usedPins.Add(Convert.ToByte((device as MobiFlight.Config.VirtualOutput).Pin));
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            // Mark all the used pins as used in the result list.
+            usedPins.ForEach(pin => ResultPins.Find(resultPin => resultPin.Pin == pin).Used = true);
+
+            if (FreeOnly)
+                ResultPins = ResultPins.FindAll(x => x.Used == false);
+
+            return ResultPins;
+        }
+
         public List<MobiFlightPin> GetPins(bool FreeOnly = false)
         {
             List<MobiFlightPin> ResultPins = new List<MobiFlightPin>();
@@ -1132,7 +1209,7 @@ namespace MobiFlight
                         break;
 
                     default:
-                        throw new NotImplementedException();
+                        break;
                 }
             }
 

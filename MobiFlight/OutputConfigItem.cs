@@ -40,7 +40,8 @@ namespace MobiFlight
         public OutputConfig.ShiftRegister ShiftRegister               { get; set; }
         public string       DisplayTrigger              { get; set; }
         public PreconditionList   Preconditions       { get; set; }
-        public ConfigRefList      ConfigRefs          { get; set; }        
+        public ConfigRefList      ConfigRefs          { get; set; }     
+        public OutputConfig.VirtualOutput VirtualOutput { get; set; }
 
         public OutputConfigItem()
         {
@@ -60,6 +61,7 @@ namespace MobiFlight
             Interpolation = new Interpolation();
             Preconditions = new PreconditionList();
             ConfigRefs = new ConfigRefList();
+            VirtualOutput = new OutputConfig.VirtualOutput();
         }
 
         public override bool Equals(object obj)
@@ -74,6 +76,7 @@ namespace MobiFlight
                 //===
                 this.Comparison.Equals((obj as OutputConfigItem).Comparison) &&
                 this.Pin.Equals((obj as OutputConfigItem).Pin) &&
+                this.VirtualOutput.Equals((obj as OutputConfigItem).VirtualOutput) &&
                 //===
                 this.LedModule.Equals((obj as OutputConfigItem).LedModule) &&
                 //===
@@ -180,6 +183,11 @@ namespace MobiFlight
                 {
                     ShiftRegister.ReadXml(reader);
                 }
+                else if (DisplayType == MobiFlightVirtualOutput.TYPE)
+                {
+                    VirtualOutput.ReadXml(reader);
+                }
+
             }
 
             // Actually interpolation is in he wrong spot. :(
@@ -290,6 +298,10 @@ namespace MobiFlight
                 {
                     ShiftRegister.WriteXml(writer);
                 }
+                else if (DisplayType == MobiFlightVirtualOutput.TYPE)
+                {
+                    VirtualOutput.WriteXml(writer);
+                }
                 else
                 {
                     Pin.WriteXml(writer);
@@ -329,6 +341,7 @@ namespace MobiFlight
             clone.LedModule                 = this.LedModule.Clone() as OutputConfig.LedModule;
 
             clone.Pin                       = this.Pin.Clone() as OutputConfig.Pin;
+            clone.VirtualOutput             = this.VirtualOutput.Clone() as OutputConfig.VirtualOutput;
             
             clone.BcdPins                   = new List<string>(this.BcdPins);
 
