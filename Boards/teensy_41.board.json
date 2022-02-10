@@ -13,7 +13,7 @@
     "ForceResetOnFirmwareUpdate": false,
     "DelayAfterFirmwareUpdate": 0,
     "DtrEnable": true,
-    "MessageSize": 64,
+    "MessageSize": 32,
     "EEPROMSize": 1496
   },
   "HardwareIds": [

@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Serialization;
 
 namespace MobiFlight.Config
 {
     public class TftButton : BaseDevice
     {
-        [XmlAttribute]
-
         const ushort _paramCount = 1;
 
         public TftButton() { Name = "TFT Touch Button"; _type = DeviceType.TftButton; }
